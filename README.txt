@@ -1,4 +1,4 @@
-Before the launch:
+Before launching:
 
 1) Install Luckiest Guy font before launching the game (in the main folder)
 2) Make sure that your device is connected to power supply (or else cmu_graphics...)
