@@ -202,7 +202,7 @@ def restart(app):
     app.levelHeight = 2000
     app.scrollX = 0
     app.scrollY = 0
-    app.step = 0
+    app.step = 899 * app.stepsPerSecond
     app.stepsPerSecond = 30
     app.hero = Hero(app.width // 2, app.height // 2)
     app.enemies = []
