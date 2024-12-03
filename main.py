@@ -1,3 +1,8 @@
+################################
+### Name: Sherkhan Bakdaulet
+### andrewID: sbakdaul
+################################
+
 from modulesArcade import *
 import random
 from PIL import Image
@@ -243,7 +248,6 @@ def restart(app):
         else:
             app.possibleSelectionP[upgrade] = 5
 
-    app.joy = "Yay"
     app.currentJoy = None
     app.isJoy = False
     app.joyTime = 0
@@ -501,8 +505,9 @@ def drawVictoryScreen(app):
     drawLabel("Claim", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2, 
               size=25, fill='white', bold=True, font = "Luckiest Guy")
     selectorR = 25 // math.cos(math.radians(30))
-    drawStar(buttonX - 75, buttonY, selectorR, 3, fill = "gold", 
-             border = "white")
+    selectorY = buttonY + buttonHeight / 2
+    drawRegularPolygon(buttonX - 50, selectorY, selectorR, 3, fill = "gold", 
+             border = "white", rotateAngle = 90, borderWidth = 2)
 
 def drawContinueScreen(app):
     drawRect(0, 0, app.width, app.height, 
@@ -538,10 +543,11 @@ def drawContinueScreen(app):
              fill='seagreen', border='white', borderWidth=2)
     drawLabel("Continue", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2, 
               size=25, fill='white', bold=True, font = "Luckiest Guy")
-    
+
     selectorR = 25 // math.cos(math.radians(30))
-    drawStar(buttonX - 75, buttonY, selectorR, 3, fill = "gold", 
-             border = "white", roundness = 0)
+    selectorY = buttonY + buttonHeight / 2
+    drawRegularPolygon(buttonX - 50, selectorY, selectorR, 3, fill = "gold", 
+             border = "white", rotateAngle = 90, borderWidth = 2)
 
 def drawWalls(app):
     #Left Wall
@@ -829,11 +835,8 @@ def redrawAll(app):
 
         if app.victoryScreen:
             drawVictoryScreen(app)
-    
-    drawLabel(app.joy, 700, 100, fill = "black", size = 30)
 
 def onJoyPress(app, button, joystick):
-    app.joy = button
     if button == '5':
         sys.exit(0)
     if button == "0":

@@ -75,13 +75,15 @@ class Hero(Sprite):
         self.bulletDamage = 10
         self.bulletR = 3
         self.bulletSpeed = 10
-        self.bulletCD = 0
+        self.bulletCD = 10
         self.projectiles = []
         self.step = 0
+        self.RPGR = 20
+        self.RPGD = 20
         self.skills = {
             "RPG": [False, 0], "Type-A Drone": [False, 0],
             "Type-B Drone": [False, 0], "Forcefield": [False, 0],
-            "Lightning Emitter": [False, 0], "Drill Shot": [False, 0],
+            "Lightning Emitter": [True, 0], "Drill Shot": [False, 0],
             "Energy Cube": [False, 0], "Ammo Thruster": [False, 0], 
             "Ronin Oyoroi": [False, 0], "Sports Shoes": [False, 0], 
             "HE Fuel": [False, 0], "Fitness Guide": [False, 0]
@@ -110,7 +112,7 @@ class Hero(Sprite):
                  healthBar + 0.1, 15, fill = "green")
     
     def loseHP(self, damage, app):
-        super().loseHP(damage)
+        self.hp -= int(damage * (1 - self.armor * 0.1))
         if self.hp <= 0:
             app.isGameOver = True
             
@@ -515,7 +517,7 @@ class Drone():
             self.dy = -self.dy
 
         #Attack mechanics
-        target = app.hero.findClosestEnemy(app, 150)
+        target = app.hero.findClosestEnemy(app, 250)
         if target != None:
             if self.step % (app.stepsPerSecond - self.CD) == 0:
                 randomDir = rand.choice([0, 45, 90, 135, 180, 225, 
@@ -610,13 +612,13 @@ class Forcefield():
                     e.loseHP(app, self.damage)
 
 class RPGRocket(Projectile):
-    def __init__(self, x, y, d, tx, ty):
+    def __init__(self, x, y, d, tx, ty, expR, expD):
         super().__init__(x, y, d)
         self.speed = 25
         self.r = 15
-        self.expR = 20
+        self.expR = expR
         self.step = 0
-        self.damage = 20
+        self.damage = expD
         self.step = 0
 
         #Registering target coordinates
