@@ -4,6 +4,7 @@ from PIL import Image
 import os, pathlib
 import sys
 import joystick
+import time
 
 def onAppStart(app):
     restart(app)
@@ -242,6 +243,12 @@ def restart(app):
             app.possibleSelectionW[upgrade] = 5
         else:
             app.possibleSelectionP[upgrade] = 5
+
+    app.joy = "Yay"
+    app.savedJoy = None
+    app.currentJoy = None
+    app.isJoy = False
+    app.joyTime = 0
     
 def onStep(app):
     if not app.isGameOver and not app.paused and not app.mainMenuScreen:
@@ -382,9 +389,8 @@ def onStep(app):
         for e in app.screenExplosions:
             e.onStep(app)
 
-    if app.skillChoice:
-        if app.choice != None:
-            pass
+    if app.isJoy:
+        pass
 
 def drawTree(app, x, y, size=70):
     greenRadius = size // 2
@@ -809,8 +815,11 @@ def redrawAll(app):
 
         if app.victoryScreen:
             drawVictoryScreen(app)
+    
+    drawLabel(app.joy, 700, 100, fill = "black", size = 30)
 
 def onJoyPress(app, button, joystick):
+    app.joy = button
     if button == '5':
         sys.exit(0)
     if button == "1":
@@ -819,29 +828,29 @@ def onJoyPress(app, button, joystick):
     if app.paused:
         if app.skillChoice:
             if len(app.currentChoices) == 3:
-                if button == 2:
+                if button == '2':
                     app.choice = 1
                     applyChoice(app)
-                if button == 3:
+                if button == '3':
                     app.choice = 2
                     applyChoice(app)
-                if button == 0:
+                if button == '0':
                     app.choice = 3
                     applyChoice(app)
             elif len(app.currentChoices) == 2:
-                if button == 2 or button == 3:
+                if button == '2' or button == '3':
                     app.choice = 1
                     applyChoice(app)
                 if button == 0:
                     app.choice = 2
                     applyChoice(app)
             else:
-                if button == 2 or button == 3 or button == 0:
+                if button == '2' or button == '3' or button == '0':
                     app.choice = 1
                     applyChoice(app)
 
     if app.mainMenuScreen:
-        if button == 8:
+        if button == '8':
             if app.selector < 2:
                 app.mode = app.selector + 1
                 app.mainMenuScreen = False
@@ -849,17 +858,19 @@ def onJoyPress(app, button, joystick):
                 sys.exit(0)
 
     if app.continued:
-        if button == 8 or button == 9:
+        if button == '8' or button == '9':
             app.continued = False
             app.paused = False
 
     if app.victoryScreen:
-        if button == 8 or button == 9:
+        if button == '8' or button == '9':
             app.confirm = True
 
 
 
 def onDigitalJoyAxis(app, results, joystick):
+    if (1, 0) in results or (0, 0) in results:
+        app.joy = "Success"
     if not app.isGameOver and not app.paused:
         if not app.bossFight:
             if (1, -1) in results and app.hero.y - app.hero.r > -700:
@@ -898,6 +909,8 @@ def onDigitalJoyAxis(app, results, joystick):
 
     if app.mainMenuScreen:
         if (1, -1) in results:
+            app.currentJoy = (1, -1)
+            app.isJoy = True
             app.selector -= 1
             if app.selector == -1:
                 app.selector = 2
