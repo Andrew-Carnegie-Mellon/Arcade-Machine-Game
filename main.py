@@ -247,6 +247,8 @@ def restart(app):
     app.currentJoy = None
     app.isJoy = False
     app.joyTime = 0
+    app.drop.append(Bomb(300, 300))
+    app.drop.append(Magnet(400, 400))
     
 def onStep(app):
     if not app.isGameOver and not app.paused and not app.mainMenuScreen:
@@ -617,7 +619,8 @@ def drawThreeColumns(app):
         drawRect(i + 10, 510, 213, 55, fill = rgb(51, 60, 81),
                  border = "black")
         if i // 258 == app.selector:
-            drawRect(i, 210, 233, 365, fill = None, border = "white")
+            drawRect(i, 210, 233, 365, fill = None, border = "white", 
+                     borderWidth = 3)
     
     for i in range(3):
         centerY = 538
