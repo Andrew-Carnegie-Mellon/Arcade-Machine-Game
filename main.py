@@ -881,7 +881,7 @@ def skillMenuMovement(app, move):
     if move == (0, -1):
         app.selector -= 1
         if app.selector == -1:
-            app.selector = 2
+            app.selector = upperbound - 1
     elif move == (0, 1):
         app.selector += 1
         if app.selector == upperbound:
