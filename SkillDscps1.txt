@@ -1,0 +1,44 @@
+Energy Cube$
+Gun attack 
+intervals -8%
+*Ronin Oyoroi$
+Received damage 
+-10%
+*Sports Shoes$
+Movement Speed 
++10%
+*HE Fuel$
+Gun ammo 
+range and size 
++10%
+*Fitness Guide$
+Max HP +20%
+*Ammo Thruster$
+Bullet flight 
+speed +10%
+*Lightning Emitter$
+A lightning shower 
+on 1 random target 
+area
+*Drill Shot$
+Fires +1 drill 
+shot
+*Forcefield$
+Generates a 
+dissolving 
+forcefield
+*RPG$
+Fires and explosive 
+rocket
+*Type-A Drone$
+Summons Type-A 
+drone:
+Drone fires many 
+small damage 
+missiles
+*Type-B Drone$
+Summons Type-B 
+drone:
+Drone fires higher
+damage missles with 
+longer cooldown
