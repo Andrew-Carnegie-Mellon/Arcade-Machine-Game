@@ -390,7 +390,7 @@ def onStep(app):
 
     if app.isJoy and app.mainMenuScreen:
         app.joyTime += 1
-        if app.app.joyTime == app.stepsPerSecond * 2:
+        if app.joyTime == app.stepsPerSecond * 2:
             mainMenuMovement(app, app.currentJoy)
             app.app.joyTime = 0
             app.isJoy = False
