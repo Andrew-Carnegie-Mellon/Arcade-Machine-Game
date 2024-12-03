@@ -202,7 +202,7 @@ def restart(app):
     app.levelHeight = 2000
     app.scrollX = 0
     app.scrollY = 0
-    app.step = 899 * app.stepsPerSecond
+    app.step = 0
     app.stepsPerSecond = 30
     app.hero = Hero(app.width // 2, app.height // 2)
     app.enemies = []
@@ -269,7 +269,6 @@ def onStep(app):
                 app.continued = True
                 app.boss = Boss(app.width // 2, app.height // 2)
                 app.enemies.append(app.boss)
-                app.boss.hp = 1
                 app.paused = True
             elif app.step < (app.stepsPerSecond * 900):
                 wave = app.step // (app.stepsPerSecond * 150)
@@ -621,7 +620,7 @@ def drawThreeColumns(app):
                  border = "black")
         if i // 258 == app.selector:
             drawRect(i, 210, 233, 365, fill = None, border = "white", 
-                     borderWidth = 3)
+                     borderWidth = 5)
     
     for i in range(3):
         centerY = 538
@@ -842,6 +841,7 @@ def onJoyPress(app, button, joystick):
         if app.skillChoice:
             if button == '8':
                 app.choice = app.selector + 1
+                app.selector = 0
                 applyChoice(app)
 
     if app.mainMenuScreen:
@@ -849,6 +849,7 @@ def onJoyPress(app, button, joystick):
             if app.selector < 2:
                 app.mode = app.selector + 1
                 app.mainMenuScreen = False
+                app.selector = 0
             elif app.selector == 2:
                 sys.exit(0)
 
