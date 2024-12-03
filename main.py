@@ -869,8 +869,7 @@ def onJoyPress(app, button, joystick):
 
 
 def onDigitalJoyAxis(app, results, joystick):
-    if (1, 0) in results or (0, 0) in results:
-        app.joy = "Success"
+    app.joy = str(results)
     if not app.isGameOver and not app.paused:
         if not app.bossFight:
             if (1, -1) in results and app.hero.y - app.hero.r > -700:
