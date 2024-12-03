@@ -4,7 +4,6 @@ from PIL import Image
 import os, pathlib
 import sys
 import joystick
-import time
 
 def onAppStart(app):
     restart(app)
@@ -389,8 +388,12 @@ def onStep(app):
         for e in app.screenExplosions:
             e.onStep(app)
 
-    if app.isJoy:
-        pass
+    if app.isJoy and app.mainMenuScreen:
+        app.joyCounter += 1
+        if app.joyCounter == app.stepsPerSecond * 2:
+            mainMenuMovement(app, app.currentMove)
+            app.joyCounter = 0
+            app.isJoy = False
 
 def drawTree(app, x, y, size=70):
     greenRadius = size // 2
@@ -866,7 +869,53 @@ def onJoyPress(app, button, joystick):
         if button == '8' or button == '9':
             app.confirm = True
 
+def mainMenuMovement(app, move):
+    if move == (1, -1):
+        app.selector -= 1
+        if app.selector == -1:
+            app.selector = 2
+    elif move == (1, 1):
+        app.selector += 1
+        if app.selector == 3:
+            app.selector = 0
 
+def mainMenuMovement(app, move):
+    return
+    if not app.isGameOver and not app.paused:
+        if not app.bossFight:
+            if move == (1, -1) and app.hero.y - app.hero.r > -700:
+                app.hero.y -= app.hero.dy
+                if app.hero.y - app.scrollY < 0.2 * app.height:
+                    app.scrollY -= app.hero.dy
+            if move == (1, 1) and app.hero.y + app.hero.r < 1300:
+                app.hero.y += app.hero.dy
+                if app.hero.y - app.scrollY > 0.8 * app.height:
+                    app.scrollY += app.hero.dy
+            if move ==(0, -1) and app.hero.x - app.hero.r > -600:
+                app.hero.x -= app.hero.dx
+                if app.hero.x - app.scrollX < 0.2 * app.width:
+                    app.scrollX -= app.hero.dx
+            if move == (0, 1) and app.hero.x + app.hero.r < 1400:
+                app.hero.x += app.hero.dx
+                if app.hero.x - app.scrollX > 0.8 * app.width:
+                    app.scrollX += app.hero.dx
+        else:
+            if move == (1, -1) and app.hero.y - app.hero.r > 0:
+                app.hero.y -= app.hero.dy
+                if app.hero.y - app.scrollY < 0.2 * app.height:
+                    app.scrollY -= app.hero.dy
+            if mpve == (1, 1) and app.hero.y + app.hero.r < app.height:
+                app.hero.y += app.hero.dy
+                if app.hero.y - app.scrollY > 0.8 * app.height:
+                    app.scrollY += app.hero.dy
+            if move == (0, -1) and app.hero.x - app.hero.r > 0:
+                app.hero.x -= app.hero.dx
+                if app.hero.x - app.scrollX < 0.2 * app.width:
+                    app.scrollX -= app.hero.dx
+            if move == (0, 1) and app.hero.x + app.hero.r < app.width:
+                app.hero.x += app.hero.dx
+                if app.hero.x - app.scrollX > 0.8 * app.width:
+                    app.scrollX += app.hero.dx
 
 def onDigitalJoyAxis(app, results, joystick):
     app.joy = str(results)
@@ -910,9 +959,6 @@ def onDigitalJoyAxis(app, results, joystick):
         if (1, -1) in results:
             app.currentJoy = (1, -1)
             app.isJoy = True
-            app.selector -= 1
-            if app.selector == -1:
-                app.selector = 2
         if (1, 1) in results:
             app.selector += 1
             if app.selector == 3:
