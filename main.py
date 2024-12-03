@@ -393,6 +393,7 @@ def onStep(app):
         if app.joyTime == (app.stepsPerSecond // 2):
             mainMenuMovement(app, app.currentJoy)
             app.joyTime = 0
+            app.isJoy = False
 
 def drawTree(app, x, y, size=70):
     greenRadius = size // 2
