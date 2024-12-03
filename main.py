@@ -389,10 +389,10 @@ def onStep(app):
             e.onStep(app)
 
     if app.isJoy and app.mainMenuScreen:
-        app.joyCounter += 1
-        if app.joyCounter == app.stepsPerSecond * 2:
+        app.joyTime += 1
+        if app.app.joyTime == app.stepsPerSecond * 2:
             mainMenuMovement(app, app.currentMove)
-            app.joyCounter = 0
+            app.app.joyTime = 0
             app.isJoy = False
 
 def drawTree(app, x, y, size=70):
@@ -960,9 +960,8 @@ def onDigitalJoyAxis(app, results, joystick):
             app.currentJoy = (1, -1)
             app.isJoy = True
         if (1, 1) in results:
-            app.selector += 1
-            if app.selector == 3:
-                app.selector = 0
+            app.currentJoy = (1, 1)
+            app.isJoy = True
 
     if app.skillChoice:
         if len(app.currentChoices) == 3:
