@@ -269,6 +269,7 @@ def onStep(app):
                 app.continued = True
                 app.boss = Boss(app.width // 2, app.height // 2)
                 app.enemies.append(app.boss)
+                app.boss.hp = 1
                 app.paused = True
             elif app.step < (app.stepsPerSecond * 900):
                 wave = app.step // (app.stepsPerSecond * 150)
