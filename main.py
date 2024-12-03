@@ -870,16 +870,6 @@ def onJoyPress(app, button, joystick):
             app.confirm = True
 
 def mainMenuMovement(app, move):
-    if move == (1, -1):
-        app.selector -= 1
-        if app.selector == -1:
-            app.selector = 2
-    elif move == (1, 1):
-        app.selector += 1
-        if app.selector == 3:
-            app.selector = 0
-
-def mainMenuMovement(app, move):
     return
     if not app.isGameOver and not app.paused:
         if not app.bossFight:
@@ -916,6 +906,16 @@ def mainMenuMovement(app, move):
                 app.hero.x += app.hero.dx
                 if app.hero.x - app.scrollX > 0.8 * app.width:
                     app.scrollX += app.hero.dx
+
+def mainMenuMovement(app, move):
+    if move == (1, -1):
+        app.selector -= 1
+        if app.selector == -1:
+            app.selector = 2
+    elif move == (1, 1):
+        app.selector += 1
+        if app.selector == 3:
+            app.selector = 0
 
 def onDigitalJoyAxis(app, results, joystick):
     app.joy = str(results)
