@@ -957,9 +957,13 @@ def onDigitalJoyAxis(app, results, joystick):
 
     if app.mainMenuScreen:
         if (1, -1) in results:
+            if (app.currentJoy) not in results:
+                app.joyTime = 0
             app.currentJoy = (1, -1)
             app.isJoy = True
         if (1, 1) in results:
+            if app.currentJoy not in results:
+                app.joyTime = 0
             app.currentJoy = (1, 1)
             app.isJoy = True
 
