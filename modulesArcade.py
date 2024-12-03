@@ -70,7 +70,7 @@ class Hero(Sprite):
         self.armor = 0
         self.level = 0
         self.exp = 0
-        self.levelEXPReq = 1
+        self.levelEXPReq = 5
         self.aimDir = 0
         self.bulletDamage = 10
         self.bulletR = 3
@@ -120,7 +120,7 @@ class Hero(Sprite):
             self.hp = self.maxHP
         self.exp -= self.levelEXPReq
         self.level += 1
-        self.levelEXPReq += 0
+        self.levelEXPReq += 5
             
     def shoot(self):
         self.projectiles.append(Bullet(self.x, self.y, self.aimDir, 

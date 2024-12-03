@@ -662,7 +662,8 @@ def drawTwoColumns(app):
         drawRect(i + 10, 510, 213, 55, fill = rgb(51, 60, 81),
                  border = "black")
         if i // 258 == app.selector:
-            drawRect(i, 210, 233, 365, fill = None, border = "white")
+            drawRect(i, 210, 233, 365, fill = None, border = "white",
+                     borderWidth = 5)
     
     for i in range(2):
         centerY = 538
@@ -703,7 +704,8 @@ def drawOneColumn(app):
                  border = "black")
         drawRect(i + 10, 510, 213, 55, fill = rgb(51, 60, 81),
                  border = "black")
-        drawRect(i, 210, 233, 365, fill = None, border = "white")
+        drawRect(i, 210, 233, 365, fill = None, border = "white", 
+                 borderWidth = 5)
     
     for i in range(1):
         centerY = 538
@@ -834,18 +836,18 @@ def onJoyPress(app, button, joystick):
     app.joy = button
     if button == '5':
         sys.exit(0)
-    if button == "1":
+    if button == "0":
         restart(app)
     
     if app.paused:
         if app.skillChoice:
-            if button == '8':
+            if button == '8' or button == '9' or button == '1':
                 app.choice = app.selector + 1
                 app.selector = 0
                 applyChoice(app)
 
     if app.mainMenuScreen:
-        if button == '8':
+        if button == '8' or button == '9' or button == '1':
             if app.selector < 2:
                 app.mode = app.selector + 1
                 app.mainMenuScreen = False
@@ -854,12 +856,12 @@ def onJoyPress(app, button, joystick):
                 sys.exit(0)
 
     if app.continued:
-        if button == '8' or button == '9':
+        if button == '8' or button == '9' or button == '1':
             app.continued = False
             app.paused = False
 
     if app.victoryScreen:
-        if button == '8' or button == '9':
+        if button == '8' or button == '9' or button == '1':
             app.confirm = True
 
 def mainMenuMovement(app, move):
@@ -890,7 +892,6 @@ def skillMenuMovement(app, move):
             app.selector = 0
 
 def onDigitalJoyAxis(app, results, joystick):
-    app.joy = str(results)
     if not app.isGameOver and not app.paused:
         if not app.bossFight:
             if (1, -1) in results and app.hero.y - app.hero.r > -700:
