@@ -16,7 +16,7 @@ def loadText(filename, app):
     for skill in theText.split("*"):
         n, d = skill.split("$")
         app.skillDescription1[n] = []
-        app.skillImg[n] = prefix + f'\{n}' + suffix
+        app.skillImg[n] = prefix + f'/{n}' + suffix
         for line in d.splitlines():
             if not line == "":
                 app.skillDescription1[n].append(line)
@@ -24,39 +24,39 @@ def loadText(filename, app):
 def loadAssets(app):
     app.explosionIMGs = []
     for i in range(1, 11):
-        temp = openImage(f"images\Explosion\{i}.png")
+        temp = openImage(f"images/Explosion/{i}.png")
         app.explosionIMGs.append(CMUImage(temp))
 
     app.lightningIMGs = []
     for i in range(1, 5):
-        temp = openImage(f"images\Lightning\{i}.png")
+        temp = openImage(f"images/Lightning/{i}.png")
         app.lightningIMGs.append(CMUImage(temp))
 
-    temp = openImage("images\Type-A Drone.png")
+    temp = openImage("images/Type-A Drone.png")
     app.droneAImg = [CMUImage(temp), 
                      CMUImage(temp.transpose(Image.FLIP_LEFT_RIGHT))]
-    temp = openImage("images\Type-B Drone.png")
+    temp = openImage("images/Type-B Drone.png")
     app.droneBImg = [CMUImage(temp), 
                      CMUImage(temp.transpose(Image.FLIP_LEFT_RIGHT))]
     
-    app.RPGImg = CMUImage(openImage("images\RPG.png"))
-    app.drillShotImg = CMUImage(openImage("images\Drill Shot.png"))
-    app.bombImg = CMUImage(openImage("images\Bomb.png"))
-    app.magnetImg = CMUImage(openImage("images\Magnet.png"))
-    app.meatImg = CMUImage(openImage("images\Meat.png"))
-    app.boxImg = CMUImage(openImage("images\Box.png"))
+    app.RPGImg = CMUImage(openImage("images/RPG.png"))
+    app.drillShotImg = CMUImage(openImage("images/Drill Shot.png"))
+    app.bombImg = CMUImage(openImage("images/Bomb.png"))
+    app.magnetImg = CMUImage(openImage("images/Magnet.png"))
+    app.meatImg = CMUImage(openImage("images/Meat.png"))
+    app.boxImg = CMUImage(openImage("images/Box.png"))
 
 def loadCharacters(app):
-    app.profImg = CMUImage(openImage("images\Characters\Prof.png"))
-    app.dikaImg = CMUImage(openImage("images\Characters\Dika.png"))
-    app.emuImg = CMUImage(openImage("images\Characters\Emu.png"))
-    app.faizImg = CMUImage(openImage("images\Characters\Faiz.png"))
-    app.furqanImg = CMUImage(openImage("images\Characters\Furqan.png"))
-    app.rashidImg = CMUImage(openImage("images\Characters\Rashid.png"))
-    app.sherImg = CMUImage(openImage("images\Characters\Sherkhan.png"))
-    app.sudaisImg = CMUImage(openImage("images\Characters\Sudais.png"))
-    app.adamImg = CMUImage(openImage("images\Characters\Adam.png"))
-    app.bossImg = CMUImage(openImage("images\Characters\DavidKosbie.png"))
+    app.profImg = CMUImage(openImage("images/Characters/Prof.png"))
+    app.dikaImg = CMUImage(openImage("images/Characters/Dika.png"))
+    app.emuImg = CMUImage(openImage("images/Characters/Emu.png"))
+    app.faizImg = CMUImage(openImage("images/Characters/Faiz.png"))
+    app.furqanImg = CMUImage(openImage("images/Characters/Furqan.png"))
+    app.rashidImg = CMUImage(openImage("images/Characters/Rashid.png"))
+    app.sherImg = CMUImage(openImage("images/Characters/Sherkhan.png"))
+    app.sudaisImg = CMUImage(openImage("images/Characters/Sudais.png"))
+    app.adamImg = CMUImage(openImage("images/Characters/Adam.png"))
+    app.bossImg = CMUImage(openImage("images/Characters/DavidKosbie.png"))
 
 
 def openImage(fileName):
@@ -446,7 +446,7 @@ def drawGameOverScreen(app):
     
 def drawVictoryScreen(app):
     if app.confirm:
-        drawImage("images\Ducky.PNG", 0, 0, width = app.width, 
+        drawImage("images/Ducky.PNG", 0, 0, width = app.width, 
                   height = app.height)
         return
     drawRect(0, 0, app.width, app.height, 
