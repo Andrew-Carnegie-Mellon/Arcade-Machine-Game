@@ -836,27 +836,9 @@ def onJoyPress(app, button, joystick):
     
     if app.paused:
         if app.skillChoice:
-            if len(app.currentChoices) == 3:
-                if button == '2':
-                    app.choice = 1
-                    applyChoice(app)
-                if button == '3':
-                    app.choice = 2
-                    applyChoice(app)
-                if button == '0':
-                    app.choice = 3
-                    applyChoice(app)
-            elif len(app.currentChoices) == 2:
-                if button == '2' or button == '3':
-                    app.choice = 1
-                    applyChoice(app)
-                if button == 0:
-                    app.choice = 2
-                    applyChoice(app)
-            else:
-                if button == '2' or button == '3' or button == '0':
-                    app.choice = 1
-                    applyChoice(app)
+            if button == '8':
+                app.choice = app.selector + 1
+                applyChoice(app)
 
     if app.mainMenuScreen:
         if button == '8':
@@ -897,7 +879,7 @@ def skillMenuMovement(app, move):
         app.selector -= 1
         if app.selector == -1:
             app.selector = 2
-    if move == (0, 1):
+    elif move == (0, 1):
         app.selector += 1
         if app.selector == upperbound:
             app.selector = 0
