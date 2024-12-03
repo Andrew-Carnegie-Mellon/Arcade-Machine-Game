@@ -244,7 +244,6 @@ def restart(app):
             app.possibleSelectionP[upgrade] = 5
 
     app.joy = "Yay"
-    app.savedJoy = None
     app.currentJoy = None
     app.isJoy = False
     app.joyTime = 0
@@ -392,6 +391,13 @@ def onStep(app):
         app.joyTime += 1
         if app.joyTime == (app.stepsPerSecond // 2):
             mainMenuMovement(app, app.currentJoy)
+            app.joyTime = 0
+            app.isJoy = False
+
+    if app.isJoy and app.skillChoice:
+        app.joyTime += 1
+        if app.joyTime == (app.stepsPerSecond // 2):
+            skillMenuMovement(app, app.currentJoy)
             app.joyTime = 0
             app.isJoy = False
 
@@ -870,44 +876,6 @@ def onJoyPress(app, button, joystick):
             app.confirm = True
 
 def mainMenuMovement(app, move):
-    return
-    if not app.isGameOver and not app.paused:
-        if not app.bossFight:
-            if move == (1, -1) and app.hero.y - app.hero.r > -700:
-                app.hero.y -= app.hero.dy
-                if app.hero.y - app.scrollY < 0.2 * app.height:
-                    app.scrollY -= app.hero.dy
-            if move == (1, 1) and app.hero.y + app.hero.r < 1300:
-                app.hero.y += app.hero.dy
-                if app.hero.y - app.scrollY > 0.8 * app.height:
-                    app.scrollY += app.hero.dy
-            if move ==(0, -1) and app.hero.x - app.hero.r > -600:
-                app.hero.x -= app.hero.dx
-                if app.hero.x - app.scrollX < 0.2 * app.width:
-                    app.scrollX -= app.hero.dx
-            if move == (0, 1) and app.hero.x + app.hero.r < 1400:
-                app.hero.x += app.hero.dx
-                if app.hero.x - app.scrollX > 0.8 * app.width:
-                    app.scrollX += app.hero.dx
-        else:
-            if move == (1, -1) and app.hero.y - app.hero.r > 0:
-                app.hero.y -= app.hero.dy
-                if app.hero.y - app.scrollY < 0.2 * app.height:
-                    app.scrollY -= app.hero.dy
-            if mpve == (1, 1) and app.hero.y + app.hero.r < app.height:
-                app.hero.y += app.hero.dy
-                if app.hero.y - app.scrollY > 0.8 * app.height:
-                    app.scrollY += app.hero.dy
-            if move == (0, -1) and app.hero.x - app.hero.r > 0:
-                app.hero.x -= app.hero.dx
-                if app.hero.x - app.scrollX < 0.2 * app.width:
-                    app.scrollX -= app.hero.dx
-            if move == (0, 1) and app.hero.x + app.hero.r < app.width:
-                app.hero.x += app.hero.dx
-                if app.hero.x - app.scrollX > 0.8 * app.width:
-                    app.scrollX += app.hero.dx
-
-def mainMenuMovement(app, move):
     if move == (1, -1):
         app.selector -= 1
         if app.selector == -1:
@@ -915,6 +883,23 @@ def mainMenuMovement(app, move):
     elif move == (1, 1):
         app.selector += 1
         if app.selector == 3:
+            app.selector = 0
+
+def skillMenuMovement(app, move):
+    if len(app.currentChoices) == 3:
+        upperBound = 3
+    elif len(app.currentChoices) == 2:
+        upperbound = 2
+    else:
+        upperbound = 1
+
+    if move == (0, -1):
+        app.selector -= 1
+        if app.selector == -1:
+            app.selector = 2
+    if move == (0, 1):
+        app.selector += 1
+        if app.selector == upperbound:
             app.selector = 0
 
 def onDigitalJoyAxis(app, results, joystick):
@@ -968,20 +953,15 @@ def onDigitalJoyAxis(app, results, joystick):
             app.isJoy = True
 
     if app.skillChoice:
-        if len(app.currentChoices) == 3:
-            upperBound = 3
-        elif len(app.currentChoices) == 2:
-            upperbound = 2
-        else:
-            upperbound = 1
-
         if (0, -1) in results:
-            app.selector -= 1
-            if app.selector == -1:
-                app.selector = 2
+            if app.currentJoy != (0, -1):
+                app.joyTime = 0
+            app.currentJoy = (0, -1)
+            app.isJoy = True
         if (0, 1) in results:
-            app.selector += 1
-            if app.selector == upperbound:
-                app.selector = 0
+            if app.currentJoy != (0, 1):
+                app.joyTime = 0
+            app.currentJoy = (0, 1)
+            app.isJoy = True
 
 runApp(height = 600, width = 800)

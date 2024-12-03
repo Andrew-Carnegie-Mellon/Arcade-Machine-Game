@@ -100,8 +100,7 @@ class Hero(Sprite):
 
     def draw(self, app):
         drawImage(app.profImg, self.x - app.scrollX, self.y - app.scrollY,
-                   align = "center", width = 2 * self.r, 
-                   height = 2 * self.r)
+                   align = "center")
 
     def drawHealthBar(self, app):
         drawRect(self.x - self.r - 10 - app.scrollX, self.y + 35 - app.scrollY,
@@ -192,7 +191,7 @@ class Zombie(Enemy):
 
     def draw(self, app):
         drawImage(app.sherImg, self.x - app.scrollX, self.y - app.scrollY,
-                  align = "center", width = 2 * self.r, height = 2 * self.r)
+                  align = "center")
         
 class ZombieArcher(Enemy):
     def __init__(self, x, y):
@@ -219,7 +218,7 @@ class ZombieArcher(Enemy):
     
     def draw(self, app):
         drawImage(app.faizImg, self.x - app.scrollX, self.y - app.scrollY,
-                  align = "center", height = 2 * self.r, width = 2 * self.r)
+                  align = "center")
 
 class Runner(Enemy):
     def __init__(self, x, y):
@@ -232,7 +231,7 @@ class Runner(Enemy):
     
     def draw(self, app):
         drawImage(app.rashidImg, self.x - app.scrollX, self.y - app.scrollY,
-                  align = "center", height = 2 * self.r, width = 2 * self.r)
+                  align = "center")
         
 class Heavy(Enemy):
     def __init__(self, x, y):
@@ -246,7 +245,7 @@ class Heavy(Enemy):
     
     def draw(self, app):
         drawImage(app.sudaisImg, self.x - app.scrollX, self.y - app.scrollY,
-                  align = "center", height = 2 * self.r, width = 2 * self.r)
+                  align = "center")
         
 class Multiplier(Enemy):
     def __init__(self, x, y):
@@ -260,7 +259,7 @@ class Multiplier(Enemy):
     
     def draw(self, app):
         drawImage(app.emuImg, self.x - app.scrollX, self.y - app.scrollY,
-                  align = "center", height = 2 * self.r, width = 2 * self.r)
+                  align = "center")
         
     def terminate(self, app):
         app.enemies.append(MultiplierKids(self.x - 25, self.y - 25))
@@ -281,8 +280,8 @@ class MultiplierKids(Enemy):
         self.r = 15
     
     def draw(self, app):
-        drawImage(app.emuImg, self.x - app.scrollX, self.y - app.scrollY,
-                  align = "center", height = 2 * self.r, width = 2 * self.r)
+        drawImage(app.emuKidImg, self.x - app.scrollX, self.y - app.scrollY,
+                  align = "center")
         
 class Teleporter(Enemy):
     def __init__(self, x, y):
@@ -318,7 +317,7 @@ class Wizard(Enemy):
     
     def draw(self, app):
         drawImage(app.furqanImg, self.x - app.scrollX, self.y - app.scrollY,
-                  align = "center", width = 2 * self.r, height = 2 * self.r)
+                  align = "center")
         
     def onStep(self, app):
         super().onStep(app)
@@ -340,7 +339,7 @@ class Minion(Enemy):
     
     def draw(self, app):
         drawImage(app.dikaImg, self.x - app.scrollX, self.y - app.scrollY,
-                  align = "center", height = 2 * self.r, width = 2 * self.r)
+                  align = "center")
         
 class Boss(Enemy):
     def __init__(self, x, y):
@@ -362,7 +361,7 @@ class Boss(Enemy):
     
     def draw(self, app):
         drawImage(app.bossImg, self.x - app.scrollX, self.y - app.scrollY, 
-                  align = "center", height = 2 * self.r, width = 2 * self.r)
+                  align = "center")
 
     def novaShot(self, app):
         self.shottimer += 1
