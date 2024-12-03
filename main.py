@@ -210,6 +210,7 @@ def restart(app):
     app.isGameOver = False
     app.drop = []
     app.screenExplosions = []
+    app.selector = 0
     app.explosions = []
     app.lightning = []
     app.skillDescription1 = dict()
@@ -482,6 +483,9 @@ def drawVictoryScreen(app):
              fill='seagreen', border='white', borderWidth=2)
     drawLabel("Claim", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2, 
               size=25, fill='white', bold=True, font = "Luckiest Guy")
+    selectorR = 25 // math.cos(math.radians(30))
+    drawStar(buttonX - 75, buttonY, selectorR, 3, fill = "gold", 
+             border = "white")
 
 def drawContinueScreen(app):
     drawRect(0, 0, app.width, app.height, 
@@ -517,6 +521,10 @@ def drawContinueScreen(app):
              fill='seagreen', border='white', borderWidth=2)
     drawLabel("Continue", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2, 
               size=25, fill='white', bold=True, font = "Luckiest Guy")
+    
+    selectorR = 25 // math.cos(math.radians(30))
+    drawStar(buttonX - 75, buttonY, selectorR, 3, fill = "gold", 
+             border = "white", roundness = 0)
 
 def drawWalls(app):
     #Left Wall
@@ -593,6 +601,8 @@ def drawThreeColumns(app):
                  border = "black")
         drawRect(i + 10, 510, 213, 55, fill = rgb(51, 60, 81),
                  border = "black")
+        if i // 258 == app.selector:
+            drawRect(i, 210, 233, 365, fill = None, border = "white")
     
     for i in range(3):
         centerY = 538
@@ -633,6 +643,8 @@ def drawTwoColumns(app):
                  border = "black")
         drawRect(i + 10, 510, 213, 55, fill = rgb(51, 60, 81),
                  border = "black")
+        if i // 258 == app.selector:
+            drawRect(i, 210, 233, 365, fill = None, border = "white")
     
     for i in range(2):
         centerY = 538
@@ -673,6 +685,7 @@ def drawOneColumn(app):
                  border = "black")
         drawRect(i + 10, 510, 213, 55, fill = rgb(51, 60, 81),
                  border = "black")
+        drawRect(i, 210, 233, 365, fill = None, border = "white")
     
     for i in range(1):
         centerY = 538
@@ -730,6 +743,13 @@ def drawMainMenu(app):
         # Create button text
         drawLabel(text, buttonX, buttonY, size=25, fill='white', bold=True, 
                   font = "Luckiest Guy")
+        
+    selectorR = 25 // math.cos(math.radians(30))
+    selectorY = startY + buttonHeight / 2 + \
+        app.selector * (buttonHeight + buttonSpacing) - buttonHeight / 2
+    selectorX = buttonX - buttonWidth / 2
+    drawRegularPolygon(selectorX - 50, selectorY, selectorR, 3, fill = "gold", 
+             border = "white", rotateAngle = 90, borderWidth = 2)
     
 
 def redrawAll(app):
@@ -821,14 +841,12 @@ def onJoyPress(app, button, joystick):
                     applyChoice(app)
 
     if app.mainMenuScreen:
-        if button == 9:
-            app.mode = 1
-            app.mainMenuScreen = False
         if button == 8:
-            app.mode = 2
-            app.mainMenuScreen = False
-        if button == 1:
-            sys.exit(0)
+            if app.selector < 2:
+                app.mode = app.selector + 1
+                app.mainMenuScreen = False
+            elif app.selector == 2:
+                sys.exit(0)
 
     if app.continued:
         if button == 8 or button == 9:
@@ -877,5 +895,32 @@ def onDigitalJoyAxis(app, results, joystick):
                 app.hero.x += app.hero.dx
                 if app.hero.x - app.scrollX > 0.8 * app.width:
                     app.scrollX += app.hero.dx
+
+    if app.mainMenuScreen:
+        if (1, -1) in results:
+            app.selector -= 1
+            if app.selector == -1:
+                app.selector = 2
+        if (1, 1) in results:
+            app.selector += 1
+            if app.selector == 3:
+                app.selector = 0
+
+    if app.skillChoice:
+        if len(app.currentChoices) == 3:
+            upperBound = 3
+        elif len(app.currentChoices) == 2:
+            upperbound = 2
+        else:
+            upperbound = 1
+
+        if (0, -1) in results:
+            app.selector -= 1
+            if app.selector == -1:
+                app.selector = 2
+        if (0, 1) in results:
+            app.selector += 1
+            if app.selector == upperbound:
+                app.selector = 0
 
 runApp(height = 600, width = 800)
