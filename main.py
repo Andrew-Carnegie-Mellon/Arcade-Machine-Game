@@ -869,7 +869,7 @@ def mainMenuMovement(app, move):
 
 def skillMenuMovement(app, move):
     if len(app.currentChoices) == 3:
-        upperBound = 3
+        upperbound = 3
     elif len(app.currentChoices) == 2:
         upperbound = 2
     else:
